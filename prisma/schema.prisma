@@ -1,0 +1,62 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Employee {
+  id        Int      @id @default(autoincrement())
+  username  String
+  email     String   @unique
+  teams     EmployeeOnTeams[]
+  tasks     Task[]
+  projects  Project[] 
+}
+
+model Team {
+  id        Int           @id @default(autoincrement())
+  name      String
+  members   EmployeeOnTeams[]
+  projects  Project[]
+}
+
+model EmployeeOnTeams {
+  teamId    Int
+  employeeId  Int
+  team      Team    @relation(fields: [teamId], references: [id])
+  employee  Employee @relation(fields: [employeeId], references: [id])
+
+  @@id([teamId, employeeId])
+}
+
+model Project {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String?
+  tasks       Task[]
+  teamId      Int
+  employeeId  Int
+  team        Team       @relation(fields: [teamId], references: [id])
+  employee    Employee   @relation(fields: [employeeId], references: [id])
+}
+
+model Task {
+  id          Int         @id @default(autoincrement())
+  title       String
+  description String?
+  completed   Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  userId      Int
+  employee    Employee    @relation(fields: [userId], references: [id])
+  projectId   Int?
+  project     Project?    @relation(fields: [projectId], references: [id])
+}
+
+
+
