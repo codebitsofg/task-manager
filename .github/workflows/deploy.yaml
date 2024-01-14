@@ -35,5 +35,5 @@ jobs:
       run: |
         gcloud run deploy task-manager \
           --region europe-west1 \
-          --image=europe-west1-docker.pkg.dev/$GCLOUD_PROJECT_ID/$REPO/demo \
+          --image=europe-west1-docker.pkg.dev/$GCLOUD_PROJECT_ID/$REPO/nestapp \
           --allow-unauthenticated
