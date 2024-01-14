@@ -16,7 +16,7 @@ jobs:
         uses: 'google-github-actions/auth@v2'
         with:
           project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
-          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          credentials_json: ${{ secrets.SERVICE_ACCOUNT_KEY }}
           export_default_credentials: true 
 
       - name: Build and Push
