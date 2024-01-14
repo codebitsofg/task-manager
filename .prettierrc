@@ -1,4 +1,11 @@
 {
+  "semi": false,
   "singleQuote": true,
-  "trailingComma": "all"
+  "printWidth": 80,
+  "tabWidth": 2,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "proseWrap": "always",
+  "yamlBracketSpacing": false
 }
