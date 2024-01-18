@@ -10,12 +10,40 @@ export class EmployeeService {
     return this.databaseService.employee.create({ data: createEmployeeDto })
   }
 
+  assignTask(id: number, taskId: number) {
+    return this.databaseService.employee.update({
+      where: { id },
+      data: { tasks: { connect: { id: taskId } } }
+    })
+  }
+
+  findAllWithMails() {
+    return this.databaseService.employee.findMany({ include: { teams: true } })
+  }
+
   findAll() {
-    return this.databaseService.employee.findMany()
+    return this.databaseService.employee.findMany({
+      include: {
+        tasks: true,
+        projects: true,
+        teams: { include: { team: true, employee: true } }
+      }
+    })
   }
 
   findOne(id: number) {
-    return this.databaseService.employee.findUnique({ where: { id } })
+    return this.databaseService.employee.findUnique({
+      where: { id },
+      include: {
+        tasks: true,
+        projects: true,
+        teams: {
+          include: {
+            team: { include: { members: { include: { employee: true } } } }
+          }
+        }
+      }
+    })
   }
 
   update(id: number, updateEmployeeDto: Prisma.EmployeeUpdateInput) {
