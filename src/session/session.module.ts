@@ -29,7 +29,7 @@ export const sessionOptions = {
   resave: false,
   cookie: {
     path: '/',
-    domain: 'taskermanager.online',
+    domain: '.taskermanager.online',
     maxAge: 1000 * 60 * 30,
     sameSite: 'none',
     secure: true,
