@@ -12,6 +12,9 @@ async function bootstrap() {
     credentials: true
   })
 
+  app.set('trust proxy', 1)
+  app.enable('trust proxy')
+
   app.use(session(sessionOptions))
   console.log(`--- app is listening oooon ${process.env.PORT}`)
   await app.listen(process.env.PORT ?? 3005)
