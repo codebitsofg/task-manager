@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   Controller,
   Get,
@@ -5,19 +6,43 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  Res,
+  Req
 } from '@nestjs/common'
 import { EmployeeService } from './employee.service'
 import { Prisma } from '@prisma/client'
+import { Request } from 'express'
 
 @Controller('employee')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post()
-  create(@Body() createEmployeeDto: Prisma.EmployeeCreateInput) {
+  create(
+    @Body() createEmployeeDto: Prisma.EmployeeCreateInput,
+    @Req() request: Request
+  ) {
+    request.session.userMail = createEmployeeDto.email
     return this.employeeService.create(createEmployeeDto)
   }
+
+  @Get('/getUserId')
+  findUserId(@Req() request: Request) {
+    if (request.session.userMail) {
+      const mailAdress = request.session.userMail
+      return this.employeeService.findUserId(mailAdress)
+    } else {
+      return 'No access'
+    }
+  }
+
+  // login(
+  //   @Body() createEmployeeDto: Prisma.EmployeeCreateInput,
+  //   @Req() request: Request
+  // ) {
+  //   return this.employeeService.login()
+  // }
 
   @Get()
   findAll() {
@@ -30,7 +55,7 @@ export class EmployeeController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @Req() request: Request) {
     return this.employeeService.findOne(+id)
   }
 
@@ -49,6 +74,10 @@ export class EmployeeController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.employeeService.remove(+id)
+    return this.employeeService.remove()
+  }
+  @Delete('/remove-all')
+  remove() {
+    return this.employeeService.removeAll()
   }
 }

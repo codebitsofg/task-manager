@@ -27,4 +27,8 @@ export class ProjectService {
   remove(id: number) {
     return this.databaseService.project.delete({ where: { id } })
   }
+
+  removeAll() {
+    return this.databaseService.project.deleteMany()
+  }
 }

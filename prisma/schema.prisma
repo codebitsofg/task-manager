@@ -5,13 +5,14 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:ysxgdil0@35.195.248.72:3306/manager"
+  url      = "mysql://root:ysxgdil0@35.195.248.72:3306/taskManagerp"
 }
 
 model Employee {
   id       Int               @id @default(autoincrement())
   username String
   email    String            @unique
+  password String
   teams    EmployeeOnTeams[]
   tasks    Task[]
   projects Project[]

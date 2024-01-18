@@ -1,12 +1,20 @@
+// @ts-nocheck
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
+
+import * as session from 'express-session'
+import { sessionOptions } from './session/session.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.enableCors({
-    origin: 'https://app.taskermanager.online'
+    origin: 'https://app.taskermanager.online',
+    // origin: ['https://app.taskermanager.online', 'http://localhost:3000'],
+    credentials: true
   })
+
+  app.use(session(sessionOptions))
   console.log(`--- app is listening oooon ${process.env.PORT}`)
-  await app.listen(process.env.PORT ?? 3001)
+  await app.listen(process.env.PORT ?? 3005)
 }
 bootstrap()

@@ -10,6 +10,13 @@ export class EmployeeService {
     return this.databaseService.employee.create({ data: createEmployeeDto })
   }
 
+  async findUserId(mailAdress: string) {
+    const user = await this.databaseService.employee.findUnique({
+      where: { email: mailAdress }
+    })
+    return user.id
+  }
+
   assignTask(id: number, taskId: number) {
     return this.databaseService.employee.update({
       where: { id },
@@ -52,5 +59,9 @@ export class EmployeeService {
 
   remove(id: number) {
     return `This action removes a #${id} employee`
+  }
+
+  removeAll() {
+    return this.databaseService.employee.deleteMany({})
   }
 }

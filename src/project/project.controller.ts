@@ -5,17 +5,23 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  Req
 } from '@nestjs/common'
 import { ProjectService } from './project.service'
 import { Prisma } from '@prisma/client'
+import { Request } from 'express'
 
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Post()
-  create(@Body() createProjectDto: Prisma.ProjectCreateInput) {
+  create(
+    @Body() createProjectDto: Prisma.ProjectCreateInput,
+    @Req() request: Request
+  ) {
+    console.log(request.session)
     return this.projectService.create(createProjectDto)
   }
 
@@ -41,4 +47,9 @@ export class ProjectController {
   remove(@Param('id') id: string) {
     return this.projectService.remove(+id)
   }
+
+  // @Delete('/remove-all')
+  // removeAll() {
+  //   return this.projectService.removeAll()
+  // }
 }
