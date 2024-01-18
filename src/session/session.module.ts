@@ -28,7 +28,7 @@ export const sessionOptions = {
   saveUninitialized: false,
   resave: false,
   cookie: {
-    path: '/signup',
+    path: '/',
     domain: 'taskermanager.online',
     maxAge: 1000 * 60 * 30,
     sameSite: 'none',
