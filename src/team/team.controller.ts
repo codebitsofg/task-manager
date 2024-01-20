@@ -5,10 +5,12 @@ import {
   Body,
   Patch,
   Param,
-  Delete
+  Delete,
+  Req
 } from '@nestjs/common'
 import { TeamService } from './team.service'
 import { Prisma } from '@prisma/client'
+import { Request } from 'express'
 
 @Controller('team')
 export class TeamController {
@@ -29,12 +31,15 @@ export class TeamController {
     return this.teamService.findOne(+id)
   }
 
-  @Patch('/:teamId/employee/:employeeId')
+  @Patch('/employee/:employeeId')
   async addEmployeeToTeam(
-    @Param('teamId') teamId: number,
-    @Param('employeeId') employeeId: number
+    @Param('employeeId') employeeId: number,
+    @Req() request: Request
   ) {
-    return this.teamService.addEmployee(+teamId, +employeeId)
+    //@ts-ignore
+    const { teamId } = request.session
+
+    return this.teamService.addEmployee(teamId, +employeeId)
   }
 
   @Patch(':id/projects/:projectId')

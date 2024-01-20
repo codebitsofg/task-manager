@@ -18,53 +18,29 @@ import { Request } from 'express'
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
-  @Post()
-  create(
-    @Body() createEmployeeDto: Prisma.EmployeeCreateInput,
-    @Req() request: Request
-  ) {
-    request.session.userMail = createEmployeeDto.email
-    return this.employeeService.create(createEmployeeDto)
-  }
-
-  @Get('/getUserId')
-  findUserId(@Req() request: Request) {
-    if (request.session.userMail) {
-      const mailAdress = request.session.userMail
-      return this.employeeService.findUserId(mailAdress)
-    } else {
-      return 'No access'
-    }
-  }
-
-  // login(
-  //   @Body() createEmployeeDto: Prisma.EmployeeCreateInput,
-  //   @Req() request: Request
-  // ) {
-  //   return this.employeeService.login()
-  // }
-
   @Get()
   findAll() {
     return this.employeeService.findAll()
   }
 
-  @Get('/only-mails')
+  @Get('/get-all-only-mails')
   findAllWithMails() {
     return this.employeeService.findAllWithMails()
   }
 
-  @Get(':id')
+  @Get('/getData')
   findOne(@Param('id') id: string, @Req() request: Request) {
-    return this.employeeService.findOne(+id)
+    const userId = request.session.userId
+    return this.employeeService.findOne(userId)
   }
 
-  @Patch(':id')
+  @Patch('/update')
   update(
-    @Param('id') id: number,
-    @Body() updateEmployeeDto: Prisma.EmployeeUpdateInput
+    @Body() updateEmployeeDto: Prisma.EmployeeUpdateInput,
+    @Req() request: Request
   ) {
-    return this.employeeService.update(Number(id), updateEmployeeDto)
+    const userId = request.session.userId
+    return this.employeeService.update(userId, updateEmployeeDto)
   }
 
   @Patch(':id/assignTask/:taskId')
@@ -72,10 +48,6 @@ export class EmployeeController {
     return this.employeeService.assignTask(+id, +taskId)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.employeeService.remove()
-  }
   @Delete('/remove-all')
   remove() {
     return this.employeeService.removeAll()

@@ -6,6 +6,7 @@ import { EmployeeModule } from './employee/employee.module'
 import { TasksModule } from './tasks/tasks.module'
 import { TeamModule } from './team/team.module'
 import { ProjectModule } from './project/project.module'
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { ProjectModule } from './project/project.module'
     EmployeeModule,
     TasksModule,
     TeamModule,
-    ProjectModule
+    ProjectModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService]

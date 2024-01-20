@@ -5,7 +5,7 @@ import { DatabaseService } from 'src/database/database.service'
 @Injectable()
 export class ProjectService {
   constructor(private readonly databaseService: DatabaseService) {}
-  create(createProjectDto: Prisma.ProjectCreateInput) {
+  create(createProjectDto) {
     return this.databaseService.project.create({ data: createProjectDto })
   }
 
@@ -14,7 +14,10 @@ export class ProjectService {
   }
 
   findOne(id: number) {
-    return this.databaseService.project.findUnique({ where: { id } })
+    return this.databaseService.project.findUnique({
+      where: { id },
+      include: { employee: true, tasks: { include: { employee: true } } }
+    })
   }
 
   update(id: number, updateProjectDto: Prisma.ProjectUpdateInput) {

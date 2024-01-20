@@ -18,11 +18,17 @@ export class ProjectController {
 
   @Post()
   create(
-    @Body() createProjectDto: Prisma.ProjectCreateInput,
+    @Body() body: { name: string; description: string },
     @Req() request: Request
   ) {
-    console.log(request.session)
-    return this.projectService.create(createProjectDto)
+    //@ts-ignore
+    const { userId, teamId } = request.session
+    const data = {
+      ...body,
+      teamId: teamId,
+      employeeId: userId
+    }
+    return this.projectService.create(data)
   }
 
   @Get()
