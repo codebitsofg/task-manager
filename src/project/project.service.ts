@@ -32,6 +32,6 @@ export class ProjectService {
   }
 
   removeAll() {
-    return this.databaseService.project.deleteMany()
+    return this.databaseService.project.deleteMany({})
   }
 }

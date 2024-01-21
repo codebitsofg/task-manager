@@ -42,7 +42,7 @@ export class EmployeeService {
     return this.databaseService.employee.findUnique({
       where: { id },
       include: {
-        tasks: true,
+        tasks: { include: { employee: true } },
         projects: true,
         teams: {
           include: {

@@ -54,8 +54,8 @@ export class ProjectController {
     return this.projectService.remove(+id)
   }
 
-  // @Delete('/remove-all')
-  // removeAll() {
-  //   return this.projectService.removeAll()
-  // }
+  @Delete('/remove-all')
+  removeAll() {
+    return this.projectService.removeAll()
+  }
 }

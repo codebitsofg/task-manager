@@ -46,12 +46,12 @@ export class AuthController {
     throw new UnauthorizedException('Invalid credentials')
   }
 
-  @Get()
-  async logout(@Req() req: Request, @Res() res: Response) {
-    req.session.destroy(err => {
+  @Post('/logout')
+  async logout(@Req() request: Request, @Res() res: Response) {
+    request.session.destroy(() => {
       res
-        .clearCookie('sessionCookie', { domain: 'auth-test.site' })
-        .sendStatus(200)
+        .clearCookie('connect.sid', { domain: 'taskermanager.online' })
+        .send(200)
     })
   }
 }
