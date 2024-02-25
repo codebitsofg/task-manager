@@ -47,9 +47,4 @@ export class EmployeeController {
   assignTask(@Param('id') id: number, @Param('taskId') taskId: number) {
     return this.employeeService.assignTask(+id, +taskId)
   }
-
-  @Delete('/remove-all')
-  remove() {
-    return this.employeeService.removeAll()
-  }
 }

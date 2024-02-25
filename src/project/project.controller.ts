@@ -53,9 +53,4 @@ export class ProjectController {
   remove(@Param('id') id: string) {
     return this.projectService.remove(+id)
   }
-
-  @Delete('/remove-all')
-  removeAll() {
-    return this.projectService.removeAll()
-  }
 }
