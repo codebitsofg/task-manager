@@ -20,7 +20,10 @@ export class TasksService {
   update(id: number, updateTaskDto: Prisma.TaskUpdateInput) {
     return this.databaseService.task.update({
       where: { id },
-      data: updateTaskDto
+      data: updateTaskDto,
+      include: {
+        employee: true
+      }
     })
   }
 

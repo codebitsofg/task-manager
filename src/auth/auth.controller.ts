@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpStatus,
   Post,
   Req,
   Res,
@@ -21,6 +22,10 @@ export class AuthController {
     @Req() request: Request
   ) {
     const userData = await this.authService.signup(createUserDto)
+
+    if (userData.status !== HttpStatus.OK) {
+      throw new UnauthorizedException('User Exists')
+    }
 
     // @ts-ignore-
     request.session.userId = userData.userId
@@ -49,9 +54,7 @@ export class AuthController {
   @Post('/logout')
   async logout(@Req() request: Request, @Res() res: Response) {
     request.session.destroy(() => {
-      res
-        .clearCookie('connect.sid', { domain: 'taskermanager.online' })
-        .send(200)
+      res.clearCookie('connect.sid', { domain: 'taskermanager.site' }).send(200)
     })
   }
 }

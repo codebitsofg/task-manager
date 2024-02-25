@@ -38,7 +38,6 @@ export class TeamController {
   ) {
     //@ts-ignore
     const { teamId } = request.session
-
     return this.teamService.addEmployee(teamId, +employeeId)
   }
 
