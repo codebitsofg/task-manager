@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:ysxgdil0@35.195.248.72:3306/taskManager"
+  url      = env("DATABASE_URL")
 }
 
 model Employee {
