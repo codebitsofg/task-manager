@@ -2,9 +2,9 @@ const RedisStore = require('connect-redis').default
 import { createClient } from 'redis'
 
 const redisClient = createClient({
-  password: '3JluMijpNIdRLNlgqVdyLE6HnhNClCTC',
+  password: process.env.REDIS_PASSWORD,
   socket: {
-    host: 'redis-11743.c300.eu-central-1-1.ec2.cloud.redislabs.com',
+    host: process.env.REDIS_HOST,
     port: 11743
   }
 })
