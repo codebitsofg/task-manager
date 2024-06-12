@@ -8,8 +8,7 @@ import { sessionOptions } from './config/sessionConfig'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.enableCors({
-    origin: 'https://app.taskermanager.site',
-    // origin: 'http://localhost:3000',
+    origin: 'https://application.taskermanager.site',
     credentials: true
   })
 
